@@ -11,7 +11,7 @@ export const validateCreateTask = [
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ errors: errors.array()[1].msg });
         }
         next();
     }
@@ -22,7 +22,7 @@ export const validateGetTaskById = [
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ errors: errors.array()[1].msg });
         }
         next();
     }
@@ -52,4 +52,31 @@ export const validateGetProjectById = [
         next();
     }
 ];
+
+export const validateLogin=([
+    body('email').isEmail().notEmpty().withMessage('Enter a valid Email Id'),
+    body('password').isString().notEmpty().withMessage('Password is required'),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array()[1].msg });
+        }
+        next();
+    }
+])
+
+export const validateRegister=([
+    body('email').isString().notEmpty().withMessage('Email is required'),
+    body('password').isString().notEmpty().withMessage('Password is required'),
+    body('name').isString().notEmpty().withMessage('Name is required'),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array()[1].msg });
+        }
+        next();
+    }
+])
+
+
 
