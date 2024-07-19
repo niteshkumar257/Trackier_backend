@@ -1,6 +1,6 @@
 import { client } from "../db/config.js";
 
-// Function to create a new project
+
 const createProject = async (req, res) => {
     const { name, description, created_by } = req.body;
 
@@ -16,7 +16,7 @@ const createProject = async (req, res) => {
     }
 };
 
-// Function to get all projects
+
 const getAllProjects = async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM projects');
@@ -27,7 +27,7 @@ const getAllProjects = async (req, res) => {
     }
 };
 
-// Function to get a specific project's info
+
 const getProjectById = async (req, res) => {
     const projectId = req.params.project_id;
 
