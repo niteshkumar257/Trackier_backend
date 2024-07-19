@@ -1,12 +1,20 @@
 import { client } from "../db/config.js";
 import { get_Task_Status_id } from "../utils/helper_function.js";
-
+import { project_exit,user_exit } from "../utils/helper_function.js";
 
 export const createTask = async (req, res) => {
   const { project_id } = req.params;
   const { name, description, status_id, tags, due_date, assigned_to } =
     req.body;
 
+    const project_id_exit = await project_exit(project_id);
+    const user_id_exit =await user_exit(assigned_to);
+    if (!project_id_exit) {
+      return res.status(400).json({ error: "Project Id is not valid" });
+    }
+    if (!user_id_exit) {
+      return res.status(400).json({ error: "User Id is not valid" });
+    }
   try {
     const result = await client.query(
       `INSERT INTO tasks (project_id, name, description, status_id, tags, due_date, assigned_to)
@@ -22,6 +30,8 @@ export const createTask = async (req, res) => {
 
 export const getTasksUnderProject = async (req, res) => {
   const { project_id, user_id } = req.params;
+
+  
   const { status, Due_Date } = req.query;
   const id = await get_Task_Status_id(status);
 
@@ -48,7 +58,6 @@ export const getTasksUnderProject = async (req, res) => {
   }
 };
 
-
 export const getTaskById = async (req, res) => {
   const { task_id } = req.params;
 
@@ -66,7 +75,6 @@ export const getTaskById = async (req, res) => {
     res.status(500).json({ error: "Failed to retrieve task" });
   }
 };
-
 
 export const getAllTasksUnderProject = async (req, res) => {
   const { project_id } = req.params;
