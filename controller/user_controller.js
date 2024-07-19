@@ -9,7 +9,7 @@ dotenv.config();
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if(name || password)
+    if(!email || !password)
     {
       res.status(400).json({error:"All fields are rquired"});
     }
