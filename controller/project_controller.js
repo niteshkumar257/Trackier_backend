@@ -26,7 +26,7 @@ const createProject = async (req, res) => {
 const getAllProjects = async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM projects');
-        res.status(200).json(result.rows);
+        res.status(200).json({projects:result.rows});
     } catch (error) {
         console.error('Error fetching projects:', error);
         res.status(500).json({ error: 'Failed to retrieve projects' });
@@ -45,7 +45,7 @@ const getProjectById = async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Project not found' });
         }
-        res.status(200).json(result.rows[0]);
+        res.status(200).json({project:result.rows[0]});
     } catch (error) {
         console.error('Error fetching project:', error);
         res.status(500).json({ error: 'Failed to retrieve project' });
