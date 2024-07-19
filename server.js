@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { connectDb } from "./db/config.js";
 
 
 dotenv.config();
@@ -17,11 +18,8 @@ app.use(
   // all origins are allowed
 );
 
-app.use(express.json({ limit: "16kb" })); // json body
-app.use(express.urlencoded({ extended: true })); // to decode the url special character
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+app.use(express.json({ limit: "16kb" })); 
+app.use(express.urlencoded({ extended: true })); 
 
 
 
@@ -29,6 +27,9 @@ const __dirname = path.dirname(__filename);
 app.get("/", (req, res) => {
   res.status(200).json("Home Route");
 });
+
+
+
 
 
 connectDb()
