@@ -1,10 +1,16 @@
 import { client } from "../db/config.js";
+import { user_exit } from "../utils/helper_function.js";
+
 
 
 const createProject = async (req, res) => {
     const { name, description, created_by } = req.body;
 
     try {
+        const user_id=await user_exit(created_by);
+        if(!user_id) {
+            return res.status(400).json({error:'Not a valid user Id'});
+        }
         const result = await client.query(
             'INSERT INTO projects (name, description, created_by) VALUES ($1, $2, $3) RETURNING *',
             [name, description, created_by]
