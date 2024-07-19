@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectDb } from "./db/config.js"
 import userRouter from "./routes/user_routes.js";
 import projectRouter from "./routes/project_routes.js";
+import taskRouter from "./routes/task_routes.js";
 
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 });
 app.use('/api/v1/user',userRouter);
 app.use('/api/v1/project',projectRouter);
+app.use('/api/v1/task',taskRouter);
 
 
 
