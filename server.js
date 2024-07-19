@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.get("/", (req, res) => {
-  res.status(200).json("Home Route");
+  res.status(200).json("Trackier Backend Routes");
 });
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/project", projectRouter);
