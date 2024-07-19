@@ -5,12 +5,14 @@ import { client } from "../db/config.js";
 
 dotenv.config();
 
-const create_username = (email, name) => {
-  return name.slice(0, 4) + email.slice(0, 5);
-};
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if(name || password)
+    {
+      res.status(400).json({error:"All fields are rquired"});
+    }
 
     const result = await client.query("SELECT * FROM users WHERE email = $1", [
       email,
